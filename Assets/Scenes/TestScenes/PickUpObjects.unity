@@ -358,9 +358,9 @@ GameObject:
   - component: {fileID: 1405881241}
   - component: {fileID: 1405881245}
   - component: {fileID: 1405881246}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Cube
-  m_TagString: pickUpObject
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -598,7 +598,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 2021953076}
-  pickUpObject: {fileID: 1405881240}
   pickUpRange: 20
   outerPlayerPoint: 10
   playerPosition: {x: 0, y: 0, z: 0}
