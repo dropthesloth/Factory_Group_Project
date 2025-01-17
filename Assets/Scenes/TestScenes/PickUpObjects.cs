@@ -7,61 +7,56 @@ public class PickUpObjects : MonoBehaviour
     public float pickUpRange;
     public int outerPlayerPoint;
 
-    private Vector3 playerPosition;
-    private bool isObjectPickedUp = false;
-    private RaycastHit ObjectHit;
-    private Vector3 objectoriginalPosition;
+
+    private RaycastHit objectHit;
+    public Vector3 playerPosition;
+    public bool isObjectPickedUp = false;
     
 
     void Start()
     {
-        playerPosition = player.transform.position;
+        playerPosition = player.transform.localPosition;
     }
     void Update()
     {
+        //Raycast from middle of the player
+        Physics.Raycast(playerPosition, Vector3.forward, out objectHit, pickUpRange, 1 << LayerMask.NameToLayer("pickUp"));
         pickUp();
         holdingObject();
+        playerPosition = player.transform.position;
+
+
     }
 
-    void pickUp()
+    public void pickUp()
     {
-        //Picking up the object
-        if (Input.GetKeyDown(KeyCode.E) && !isObjectPickedUp)
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            for (int i = 2; i <=outerPlayerPoint; i+=2)
+            //Is the object picked up or not
+            if (isObjectPickedUp)
             {
-                Physics.Raycast(new Vector3(playerPosition.x + i, playerPosition.y, playerPosition.z), Vector3.forward, out ObjectHit, pickUpRange);
-                Physics.Raycast(new Vector3(playerPosition.x, playerPosition.y + i, playerPosition.z), Vector3.forward, out ObjectHit, pickUpRange);
-                Physics.Raycast(new Vector3(playerPosition.x, playerPosition.y, playerPosition.z + i), Vector3.forward, out ObjectHit, pickUpRange);
+                if (objectHit.collider != null && objectHit.collider.CompareTag("pickUpObject"))
+                {
+                    isObjectPickedUp = false;
+                    objectHit.rigidbody.useGravity = true;
+                }
             }
-            Physics.Raycast(playerPosition, Vector3.forward, out ObjectHit, pickUpRange);
-
-
-            if (ObjectHit.collider != null && ObjectHit.collider.CompareTag("pickUpObject"))
+            else if (!isObjectPickedUp)
             {
-                isObjectPickedUp = true;
-                Debug.Log("I hit a pickUpObject!" +
-                    " This is the gameObject: " + ObjectHit.transform.gameObject +
-                    " this is the distance: " + ObjectHit.distance +
-                    " isObjectPickedUp: " + isObjectPickedUp);
-                objectoriginalPosition = ObjectHit.transform.position;
+                if (objectHit.collider != null && objectHit.collider.CompareTag("pickUpObject"))
+                {
+                    isObjectPickedUp = true;
+                    objectHit.rigidbody.useGravity = false;
+                }
             }
-           
-        } 
-        //Releasing the object (back to original position for now)
-        else if (isObjectPickedUp && Input.GetKeyDown(KeyCode.E))
-        {
-            ObjectHit.transform.position = objectoriginalPosition;
-            isObjectPickedUp = false;
-            Debug.Log("isObjectPickedUp: " + isObjectPickedUp);
         }
     }
-    void holdingObject()
+    public void holdingObject()
     {
-        if (isObjectPickedUp == true)
+        if (isObjectPickedUp == true && objectHit.collider != null && objectHit.collider.CompareTag("pickUpObject"))
         {
             //Set the position of where the object is.
-            ObjectHit.transform.position = new Vector3 (objectoriginalPosition.x,objectoriginalPosition.y,objectoriginalPosition.z+1);
+            objectHit.transform.position = new Vector3 (playerPosition.x,playerPosition.y,playerPosition.z + 2);
         }
     }
 }
