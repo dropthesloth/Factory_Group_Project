@@ -1198,11 +1198,11 @@ MonoBehaviour:
   - {fileID: 182158459}
   - {fileID: 2115523203}
   switchDependencies:
-  - dependentSwitchIndices: 0300000004000000
-  - dependentSwitchIndices: 02000000
-  - dependentSwitchIndices: 
-  - dependentSwitchIndices: 01000000
-  - dependentSwitchIndices: 
+  - dependentSwitchIndices: 0100000004000000
+  - dependentSwitchIndices: 0000000002000000
+  - dependentSwitchIndices: 0000000002000000
+  - dependentSwitchIndices: 0000000002000000
+  - dependentSwitchIndices: 0000000002000000
 --- !u!1 &944744141
 GameObject:
   m_ObjectHideFlags: 0
