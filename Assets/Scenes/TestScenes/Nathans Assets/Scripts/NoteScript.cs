@@ -14,7 +14,7 @@ public class NoteScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (note.activeSelf && Input.GetKeyDown(KeyCode.Escape) /*|| Input.GetMouseButtonDown(0)*/)
+        if (note.activeSelf && Input.GetKeyDown(KeyCode.Space) /*|| Input.GetMouseButtonDown(0)*/)
             note.SetActive(false);
     }
     void OnMouseDown()
