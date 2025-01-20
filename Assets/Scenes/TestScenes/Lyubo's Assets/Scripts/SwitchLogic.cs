@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class SwitchLogic : MonoBehaviour
 {
     public List<GameObject> switches; // List of switch GameObjects
     public List<int> correctPattern; // List of correct pattern indices
-
+    public UnityEvent finishEvent;
     private int currentStep = 0;
 
     void Start()
@@ -37,7 +38,9 @@ public class SwitchLogic : MonoBehaviour
         if (currentStep >= correctPattern.Count)
         {
             Debug.Log("Correct pattern entered!");
-            // Add additional logic here for successful completion
+                // Add additional logic here for successful completion
+                finishEvent.Invoke();
+            
         }
     }
     else
