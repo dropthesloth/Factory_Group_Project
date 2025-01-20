@@ -1,14 +1,19 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
+
+[System.Serializable]
+public class SwitchDependency
+{
+    public List<int> dependentSwitchIndices;
+}
 
 public class SwitchLogic : MonoBehaviour
 {
-    public List<GameObject> switches; // List of switch GameObjects
-    public List<int> correctPattern; // List of correct pattern indices
-    public UnityEvent finishEvent;
-    private int currentStep = 0;
+    [SerializeField]
+    private List<GameObject> switches; // List of switch GameObjects
+
+    [SerializeField]
+    private List<SwitchDependency> switchDependencies; // List of dependencies for each switch
 
     void Start()
     {
@@ -16,44 +21,39 @@ public class SwitchLogic : MonoBehaviour
     }
 
     public void OnSwitchClicked(int switchIndex)
-{
-    // Check if the clicked switch is the first in the correct pattern
-    if (switchIndex == correctPattern[0])
     {
-        // Reset all switches when starting a new sequence
-        ResetSwitches();
+        // Toggle the main switch
+        bool newState = switches[switchIndex].GetComponent<Renderer>().material.color != Color.green;
+        ToggleSwitch(switchIndex, newState);
 
-        // Turn on the first switch in the pattern
-        switches[switchIndex].GetComponent<Renderer>().material.color = Color.green;
-
-        // Set the current step to the first step
-        currentStep = 1;
-    }
-    else if (currentStep > 0 && switchIndex == correctPattern[currentStep])
-    {
-        // Continue the sequence if the switch is the correct next one
-        switches[switchIndex].GetComponent<Renderer>().material.color = Color.green;
-        currentStep++;
-
-        if (currentStep >= correctPattern.Count)
+        if (AreAllSwitchesOn())
         {
-            Debug.Log("Correct pattern entered!");
-                // Add additional logic here for successful completion
-                finishEvent.Invoke();
-            
+            Debug.Log("All switches are on! Puzzle completed!");
+            // Add additional logic here for successful completion
         }
     }
-    else
+
+    private void ToggleSwitch(int switchIndex, bool state)
     {
-        // Reset the sequence and turn on the clicked switch
-        ResetSwitches();
-        switches[switchIndex].GetComponent<Renderer>().material.color = Color.green;
+        switches[switchIndex].GetComponent<Renderer>().material.color = state ? Color.green : Color.red;
 
-        // Reset step count
-        currentStep = 0;
+        foreach (int dependentSwitchIndex in switchDependencies[switchIndex].dependentSwitchIndices)
+        {
+            switches[dependentSwitchIndex].GetComponent<Renderer>().material.color = state ? Color.green : Color.red;
+        }
     }
-}
 
+    private bool AreAllSwitchesOn()
+    {
+        foreach (GameObject switchObj in switches)
+        {
+            if (switchObj.GetComponent<Renderer>().material.color != Color.green)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 
     private void ResetSwitches()
     {
@@ -61,6 +61,5 @@ public class SwitchLogic : MonoBehaviour
         {
             switchObj.GetComponent<Renderer>().material.color = Color.red; // Turn off the switch
         }
-        currentStep = 0;
     }
 }
