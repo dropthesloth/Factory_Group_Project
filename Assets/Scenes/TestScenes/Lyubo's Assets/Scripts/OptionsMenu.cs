@@ -61,8 +61,8 @@ public class OptionsMenu : MonoBehaviour
         Screen.fullScreen = isfullScreen;
     }
 
-    public void BackButton()
+    public void BackButton(string sceneName)
     {
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene(sceneName);
     }
 }
