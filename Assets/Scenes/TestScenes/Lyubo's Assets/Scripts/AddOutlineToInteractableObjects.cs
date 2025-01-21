@@ -28,6 +28,10 @@ public class AddOutlineToInteractableObjects : MonoBehaviour
             {
                 interactable.AddComponent<CapsuleCollider>();
             }
+            if (interactable.GetComponent<CapsuleCollider>().isTrigger == false)
+            {
+                interactable.GetComponent<CapsuleCollider>().isTrigger = true;
+            }
         }
     }
 }
