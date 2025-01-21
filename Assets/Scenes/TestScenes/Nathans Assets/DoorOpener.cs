@@ -14,6 +14,8 @@ public class DoorOpener : MonoBehaviour
         endPosition = door.transform.position;
         endPosition.z = door.transform.position.z - 15;
         openDoor = false;
+        if (doorPanelText != null)
+            doorPanelText.text = "CLOSED";
     }
 
     // Update is called once per frame
@@ -27,7 +29,8 @@ public class DoorOpener : MonoBehaviour
     public void OpenDoor()
     {
         openDoor = true;
-        doorPanelText.text = "OPEN";
+        if (doorPanelText != null)
+            doorPanelText.text = "OPEN";
         doorPanelText.color = Color.green;
     }
 }
