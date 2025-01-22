@@ -6,13 +6,13 @@ public class DoorOpener : MonoBehaviour
 {
     public GameObject door;
     bool openDoor;
-    Vector3 endPosition;
+    [SerializeField]Vector3 endPosition;
     public TextMeshProUGUI doorPanelText;
     // Start is called before the first frame update
     void Start()
     {
-        endPosition = door.transform.position;
-        endPosition.z = door.transform.position.z - 15;
+        /*endPosition = door.transform.position;
+        endPosition.z = door.transform.position.z - 15;*/
         openDoor = false;
         if (doorPanelText != null)
             doorPanelText.text = "CLOSED";
