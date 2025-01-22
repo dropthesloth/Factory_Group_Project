@@ -55,4 +55,9 @@ public class PickUpObjects : MonoBehaviour
             objectHit.transform.position = ray.GetPoint(2);
         }
     }
+
+    public RaycastHit GetObjecHit()
+    {
+        return objectHit;
+    }
 }
