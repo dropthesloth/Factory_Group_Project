@@ -25,7 +25,11 @@ public class MemoryGameLogic : MonoBehaviour
 
     int playerButtonPress = 0;
 
-    public UnityEvent OnWin;
+    [SerializeField]
+    private UnityEvent OnWin;
+
+    [SerializeField]
+    private UnityEvent OnGameOver;
 
     // Use this for initialization
     void Start()
@@ -120,6 +124,7 @@ public class MemoryGameLogic : MonoBehaviour
         {
             b.GetComponent<Renderer>().material.color = Color.red;
         }
+        OnGameOver?.Invoke(); // Invoke the game over event
     }
 
     void SwitchTurn()
