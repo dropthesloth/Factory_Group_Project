@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [System.Serializable]
 public class SwitchDependency
@@ -14,7 +15,7 @@ public class SwitchLogic : MonoBehaviour
 
     [SerializeField]
     private List<SwitchDependency> switchDependencies; // List of dependencies for each switch
-
+    [SerializeField] UnityEvent finishEvent;
     void Start()
     {
         ResetSwitches();
@@ -30,6 +31,7 @@ public class SwitchLogic : MonoBehaviour
         {
             Debug.Log("All switches are on! Puzzle completed!");
             // Add additional logic here for successful completion
+            finishEvent.Invoke();
         }
     }
 
