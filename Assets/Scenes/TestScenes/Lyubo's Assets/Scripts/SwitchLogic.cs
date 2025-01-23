@@ -15,7 +15,10 @@ public class SwitchLogic : MonoBehaviour
 
     [SerializeField]
     private List<SwitchDependency> switchDependencies; // List of dependencies for each switch
-    [SerializeField] UnityEvent finishEvent;
+
+    [SerializeField]
+    UnityEvent finishEvent;
+
     void Start()
     {
         ResetSwitches();
@@ -24,24 +27,31 @@ public class SwitchLogic : MonoBehaviour
     public void OnSwitchClicked(int switchIndex)
     {
         // Toggle the main switch
-        bool newState = switches[switchIndex].GetComponent<Renderer>().material.color != Color.green;
+        bool newState =
+            switches[switchIndex].GetComponent<Renderer>().material.color != Color.green;
         ToggleSwitch(switchIndex, newState);
+
+        // Toggle dependent switches
+        foreach (int dependentIndex in switchDependencies[switchIndex].dependentSwitchIndices)
+        {
+            bool dependentNewState =
+                switches[dependentIndex].GetComponent<Renderer>().material.color != Color.green;
+            ToggleSwitch(dependentIndex, dependentNewState);
+        }
 
         if (AreAllSwitchesOn())
         {
             Debug.Log("All switches are on! Puzzle completed!");
-            // Add additional logic here for successful completion
             finishEvent.Invoke();
         }
     }
 
-    private void ToggleSwitch(int switchIndex, bool state)
+    private void ToggleSwitch(int switchIndex, bool newState)
     {
-        switches[switchIndex].GetComponent<Renderer>().material.color = state ? Color.green : Color.red;
-
-        foreach (int dependentSwitchIndex in switchDependencies[switchIndex].dependentSwitchIndices)
+        Renderer renderer = switches[switchIndex].GetComponent<Renderer>();
+        if (renderer != null)
         {
-            switches[dependentSwitchIndex].GetComponent<Renderer>().material.color = state ? Color.green : Color.red;
+            renderer.material.color = newState ? Color.green : Color.red;
         }
     }
 
@@ -61,7 +71,7 @@ public class SwitchLogic : MonoBehaviour
     {
         foreach (GameObject switchObj in switches)
         {
-            switchObj.GetComponent<Renderer>().material.color = Color.red; // Turn off the switch
+            switchObj.GetComponent<Renderer>().material.color = Color.red;
         }
     }
 }

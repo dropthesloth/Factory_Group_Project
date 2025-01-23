@@ -2940,11 +2940,14 @@ MonoBehaviour:
   - {fileID: 182158459}
   - {fileID: 2115523203}
   switchDependencies:
+  - dependentSwitchIndices: 03000000
+  - dependentSwitchIndices: 0000000002000000
   - dependentSwitchIndices: 0100000004000000
-  - dependentSwitchIndices: 0000000002000000
-  - dependentSwitchIndices: 0000000002000000
-  - dependentSwitchIndices: 0000000002000000
-  - dependentSwitchIndices: 0000000002000000
+  - dependentSwitchIndices: 04000000
+  - dependentSwitchIndices: 0200000003000000
+  finishEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &824112999
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2989,8 +2992,16 @@ MonoBehaviour:
   - {fileID: 177360975}
   - {fileID: 316586667}
   - {fileID: 1404391900}
+  startButton: {fileID: 0}
   numberOfPresses: 2
+  pressIncrement: 0
   maxLevels: 3
+  OnWin:
+    m_PersistentCalls:
+      m_Calls: []
+  OnGameOver:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &944744141
 GameObject:
   m_ObjectHideFlags: 0
