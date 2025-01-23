@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
     public float sprintMultiplier = 2f;
     public float jumpForce = 250f;
     public float mouseSensitivity = 100f;
-    public GameObject arms;
+   // public GameObject arms;
     public AudioSource jumpSound;
     public AudioSource walkSound;
     public AudioSource runSound;
@@ -90,7 +90,7 @@ public class PlayerMovement : MonoBehaviour
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
         cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-        arms.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+       // arms.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
     }
 
     void OnCollisionStay(Collision collision)
