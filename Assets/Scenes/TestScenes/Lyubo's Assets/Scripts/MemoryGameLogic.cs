@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -30,7 +31,7 @@ public class MemoryGameLogic : MonoBehaviour
 
     [SerializeField]
     private UnityEvent OnGameOver;
-
+    [SerializeField]TextMeshProUGUI levelText;
     // Use this for initialization
     void Start()
     {
@@ -47,6 +48,7 @@ public class MemoryGameLogic : MonoBehaviour
         numberOfPresses = 2;
         turn = 0; // Start with Simon's turn
         Debug.Log("Starting game. Simon's turn.");
+        levelText.text = "Level " + currentLevel;
         simonPlayer.TakeTurn(numberOfPresses, buttons);
         Invoke(nameof(SwitchTurn), 3f); // Switch to player's turn after Simon's turn
     }
@@ -97,6 +99,7 @@ public class MemoryGameLogic : MonoBehaviour
 
         Debug.Log("Great job! You successfully repeated Simon's pattern!");
         currentLevel++;
+        levelText.text = "Level " + currentLevel;
         numberOfPresses += pressIncrement;
         turn = 0; // Switch to Simon's turn
 
