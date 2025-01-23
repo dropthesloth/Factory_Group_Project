@@ -9,6 +9,7 @@ public class StartButton : MonoBehaviour
     {
         if (memoryGameLogic != null)
         {
+            if(memoryGameLogic.turn == 1)
             memoryGameLogic.StartGame();
         }
     }

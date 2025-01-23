@@ -19,7 +19,7 @@ public class MemoryGameLogic : MonoBehaviour
     GameObject startButton; // Reference to the start button
 
     int currentLevel = 1;
-    int turn = 0; // 0 for Simon's turn, 1 for Player's turn
+    public int turn = 1; // 0 for Simon's turn, 1 for Player's turn
     public int numberOfPresses = 2;
     public int pressIncrement;
     public int maxLevels = 10; // Set the maximum number of levels
@@ -35,6 +35,7 @@ public class MemoryGameLogic : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        turn = 1;
         foreach (GameObject b in buttons)
         {
             b.GetComponent<ButtonHandler>().OnButtonPressed += HandleButtonPressed;
