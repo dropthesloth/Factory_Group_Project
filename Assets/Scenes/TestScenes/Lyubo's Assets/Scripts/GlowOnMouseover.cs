@@ -13,6 +13,8 @@ public class GlowOnMouseover : MonoBehaviour
     private void OnMouseOver()
     {
         outlineComp.enabled = true;
+        // Debug.Log("lalala"); 
+
     }
 
     private void OnMouseExit()
