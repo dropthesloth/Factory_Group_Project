@@ -1,30 +1,40 @@
 using TMPro;
+using Unity.VisualScripting;
+using UnityEditor.AssetImporters;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.UIElements;
 
 public class PickUpObjects : MonoBehaviour
 {
+    public TextMeshProUGUI pickUpObject;
+    public TextMeshProUGUI releaseObject;
     public PlayerMovement player;
     public float pickUpRange;
-    public string targetTag = "Interactables";
-    public string layerMask = "ignoreSnapPlace";
+    public string targetTag = "pickUpObject";
     public bool isObjectPickedUp = false;
-
+    public GameObject pickedupObject;
+    private SnapToObject snapToObject;
     private RaycastHit objectHit;
+
     void Update()
     {
-        //Raycast from middle of the player
         pickUp();
         holdingObject();
-
-
     }
 
     public void pickUp()
     {
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray.origin, ray.direction * 10, out objectHit, pickUpRange, 1 >> LayerMask.GetMask()))
+        if (Physics.Raycast(ray.origin, ray.direction * 10, out objectHit, pickUpRange, LayerMask.GetMask("pickUpObject")))
         {
+            if (isObjectPickedUp == false)
+            {
+                //pickUpObject.gameObject.SetActive(true);
+            } else
+            {
+                //pickUpObject.gameObject.SetActive(false);
+            }
             if (Input.GetKeyDown(KeyCode.E))
             {
                 //Is the object picked up or not
@@ -32,27 +42,42 @@ public class PickUpObjects : MonoBehaviour
                 {
                     if (objectHit.collider != null && objectHit.collider.CompareTag(targetTag))
                     {
+                        //releaseObject.gameObject.SetActive(false);
                         isObjectPickedUp = false;
                         objectHit.rigidbody.useGravity = true;
+                        pickedupObject.transform.SetParent(null);
+                        pickedupObject = null;
                     }
                 }
-                else if (!isObjectPickedUp)
+                else
                 {
                     if (objectHit.collider != null && objectHit.collider.CompareTag(targetTag))
                     {
-                        isObjectPickedUp = true;
-                        objectHit.rigidbody.useGravity = false;
+                        snapToObject = objectHit.collider.GetComponent<SnapToObject>();
+                        if (!snapToObject.isObjectAttached) 
+                        {
+                            //pickUpObject.gameObject.SetActive(false);
+                            isObjectPickedUp = true;
+                            objectHit.rigidbody.useGravity = false;
+                            pickedupObject = objectHit.collider.gameObject;
+                            pickedupObject.transform.SetParent(Camera.main.transform);
+                        }
+                
                     }
                 }
             }
+        } else
+        {
+            //pickUpObject.gameObject.SetActive(false);
         }
     }
     public void holdingObject()
     {
-        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if(isObjectPickedUp == true && objectHit.collider != null && objectHit.collider.CompareTag(targetTag))
+        if (pickedupObject != null)
         {
-            objectHit.transform.position = ray.GetPoint(2);
+            pickedupObject.transform.localPosition = new Vector3(Camera.main.transform.localPosition.x, Camera.main.transform.localPosition.y - 0.5f, Camera.main.transform.localPosition.z + 2);
+            pickedupObject.transform.eulerAngles = Vector3.zero;
+            pickedupObject.transform.localScale = Vector3.one;
         }
     }
 
