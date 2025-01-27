@@ -13,7 +13,7 @@ public class PickUpObjects : MonoBehaviour
     public float pickUpRange;
     public string targetTag = "pickUpObject";
     public bool isObjectPickedUp = false;
-    public GameObject pickedupObject;
+    private GameObject pickedupObject;
     private SnapToObject snapToObject;
     private RaycastHit objectHit;
 
