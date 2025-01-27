@@ -23,7 +23,7 @@ public class DoorUnlocker : MonoBehaviour
     {
         if (doorOpened && door.transform.rotation.eulerAngles.y != 90f)
         {
-            door.transform.eulerAngles = Vector3.MoveTowards(door.transform.eulerAngles, new Vector3(0, 90, 0), 0.05f);
+            door.transform.eulerAngles = Vector3.MoveTowards(door.transform.eulerAngles, new Vector3(0, 90, 0), 0.2f);
         }
     }
     private void OnMouseDown()

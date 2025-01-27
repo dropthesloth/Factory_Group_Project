@@ -13,5 +13,6 @@ public class Switches : MonoBehaviour
     void OnMouseDown()
     {
         switchPattern.OnSwitchClicked(switchIndex);
+        Debug.Log("0");
     }
 }
