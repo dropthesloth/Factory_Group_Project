@@ -324,6 +324,7 @@ GameObject:
   - component: {fileID: 2367413335454682718}
   - component: {fileID: 2765941467217270392}
   - component: {fileID: 7692867069102575791}
+  - component: {fileID: -4356774289073290946}
   m_Layer: 0
   m_Name: Curved_Conveyor_Part
   m_TagString: Untagged
@@ -400,6 +401,28 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &-4356774289073290946
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 825189467207635690}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 1735767813671732887, guid: 278ad9e96d5575a4a95d18408668dc3d, type: 3}
 --- !u!1 &853209466173403968
 GameObject:
   m_ObjectHideFlags: 0
