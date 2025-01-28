@@ -12,6 +12,15 @@ public class OldSwitches : MonoBehaviour
 
     void OnMouseDown()
     {
-        switchPattern.OnSwitchClicked(switchIndex);
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        float maxDistance = 5f;
+        if (Physics.Raycast(ray, out RaycastHit hit, maxDistance))
+        {
+            if (hit.transform == transform)
+            {
+                switchPattern.OnSwitchClicked(switchIndex);
+                Debug.Log("0");
+            }
+        }
     }
 }

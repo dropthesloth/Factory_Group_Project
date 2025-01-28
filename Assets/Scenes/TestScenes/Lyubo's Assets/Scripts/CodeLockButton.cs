@@ -10,9 +10,16 @@ public class CodeLockButton : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (codeLockLogic != null)
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit, GlobalSettings.maxClickDistance))
         {
-            codeLockLogic.AddDigit(digit);
+            if (hit.transform == transform)
+            {
+                if (codeLockLogic != null)
+                {
+                    codeLockLogic.AddDigit(digit);
+                }
+            }
         }
     }
 }

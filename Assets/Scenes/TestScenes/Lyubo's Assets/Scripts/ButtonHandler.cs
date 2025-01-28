@@ -7,14 +7,21 @@ public class ButtonHandler : MonoBehaviour
 
     public void OnMouseDown()
     {
-        if (OnButtonPressed != null)
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit, GlobalSettings.maxClickDistance))
         {
-            Debug.Log($"Pressed button: {gameObject.name}");
-            OnButtonPressed(gameObject);
-        }
-        else
-        {
-            Debug.LogWarning("No handler subscribed to OnButtonPressed!");
+            if (hit.transform == transform)
+            {
+                if (OnButtonPressed != null)
+                {
+                    Debug.Log($"Pressed button: {gameObject.name}");
+                    OnButtonPressed(gameObject);
+                }
+                else
+                {
+                    Debug.LogWarning("No handler subscribed to OnButtonPressed!");
+                }
+            }
         }
     }
 }
