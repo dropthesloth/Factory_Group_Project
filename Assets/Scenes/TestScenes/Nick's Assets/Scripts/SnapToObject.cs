@@ -11,27 +11,32 @@ public class SnapToObject : MonoBehaviour
     public TextMeshProUGUI attachToObject;
     public PickUpObjects player;
     public bool isObjectAttached = false;
+    public bool isCurved;
 
     private void Awake()
     {
-        //attachToObject.gameObject.SetActive(false);
+        attachToObject.gameObject.SetActive(false);
     }
     private void OnTriggerStay(Collider other)
     {
-        if (isObjectAttached == false)
+        if (!attachToObject.gameObject.activeSelf)
         {
-            //attachToObject.gameObject.SetActive(true);
+            attachToObject.gameObject.SetActive(true);
+            if (isObjectAttached == false)
+            {
+                attachToObject.text = "[F]Place object";
+            }
+            else
+            {
+                attachToObject.text = "[F]Deattach object";
+            }
         }
-        else
-        {
-            //attachToObject.gameObject.SetActive(false);
-        }
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F) && other.CompareTag("placingPoint"))
         {
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (isObjectAttached)
             {
-                if (Physics.Raycast(ray.origin, ray.direction, out RaycastHit hit, 10, LayerMask.GetMask("pickUpObject")) && player.pickedupObject == null)
+                if (Physics.Raycast(ray.origin, ray.direction, out RaycastHit hit, 10, LayerMask.GetMask("pickUpObjects")) && player.pickedupObject == null)
                 {
                     Debug.Log("This part works");
                     if (hit.collider.gameObject == this.gameObject)
@@ -50,17 +55,19 @@ public class SnapToObject : MonoBehaviour
             else
             {
                 player.isObjectPickedUp = false;
+                player.releaseObject.gameObject.SetActive(false);
                 this.GetComponent<Rigidbody>().isKinematic = true;
                 player.pickedupObject.transform.SetParent(null);
                 player.pickedupObject = null;
                 this.transform.position = other.transform.position;
+                other.gameObject.GetComponent<CableDecider>().CheckIfCurved(this.transform, isCurved);
                 isObjectAttached = true;
-            }  
+            }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        //attachToObject.gameObject.SetActive(false);
+        attachToObject.gameObject.SetActive(false);
     }
 }

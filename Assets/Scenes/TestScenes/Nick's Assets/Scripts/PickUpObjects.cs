@@ -17,6 +17,11 @@ public class PickUpObjects : MonoBehaviour
     private SnapToObject snapToObject;
     private RaycastHit objectHit;
 
+    private void Awake()
+    {
+        pickUpObject.gameObject.SetActive(false);
+        releaseObject.gameObject.SetActive(false);
+    }
     void Update()
     {
         pickUp();
@@ -26,15 +31,17 @@ public class PickUpObjects : MonoBehaviour
     public void pickUp()
     {
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray.origin, ray.direction * 10, out objectHit, pickUpRange, LayerMask.GetMask("pickUpObject")))
+        if (Physics.Raycast(ray.origin, ray.direction * 10, out objectHit, pickUpRange, LayerMask.GetMask("pickUpObjects")))
         {
-            if (isObjectPickedUp == false)
+            if (isObjectPickedUp == false && !pickUpObject.gameObject.activeSelf && 
+                !objectHit.transform.GetComponent<SnapToObject>().isObjectAttached)
             {
-                //pickUpObject.gameObject.SetActive(true);
-            } else
-            {
-                //pickUpObject.gameObject.SetActive(false);
+                pickUpObject.gameObject.SetActive(true);
             }
+            /*else
+            {
+                pickUpObject.gameObject.SetActive(false);
+            }*/
             if (Input.GetKeyDown(KeyCode.E))
             {
                 //Is the object picked up or not
@@ -42,7 +49,8 @@ public class PickUpObjects : MonoBehaviour
                 {
                     if (objectHit.collider != null && objectHit.collider.CompareTag(targetTag))
                     {
-                        //releaseObject.gameObject.SetActive(false);
+                        if (releaseObject.gameObject.activeSelf)
+                            releaseObject.gameObject.SetActive(false);
                         isObjectPickedUp = false;
                         objectHit.rigidbody.useGravity = true;
                         pickedupObject.transform.SetParent(null);
@@ -54,21 +62,24 @@ public class PickUpObjects : MonoBehaviour
                     if (objectHit.collider != null && objectHit.collider.CompareTag(targetTag))
                     {
                         snapToObject = objectHit.collider.GetComponent<SnapToObject>();
-                        if (!snapToObject.isObjectAttached) 
+                        if (!snapToObject.isObjectAttached)
                         {
-                            //pickUpObject.gameObject.SetActive(false);
+                            pickUpObject.gameObject.SetActive(false);
+                            if (!releaseObject.gameObject.activeSelf)
+                                releaseObject.gameObject.SetActive(true);
                             isObjectPickedUp = true;
                             objectHit.rigidbody.useGravity = false;
                             pickedupObject = objectHit.collider.gameObject;
                             pickedupObject.transform.SetParent(Camera.main.transform);
                         }
-                
+
                     }
                 }
             }
-        } else
+        }
+        else
         {
-            //pickUpObject.gameObject.SetActive(false);
+            pickUpObject.gameObject.SetActive(false);
         }
     }
     public void holdingObject()
