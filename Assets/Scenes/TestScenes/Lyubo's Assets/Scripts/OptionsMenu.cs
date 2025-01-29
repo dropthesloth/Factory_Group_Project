@@ -9,8 +9,11 @@ using UnityEngine.UI;
 public class OptionsMenu : MonoBehaviour
 {
     public AudioMixer audioMixer;
-
     public TMP_Dropdown resolutionDropdown;
+    public TMP_Dropdown qualityDropdown;
+    public Toggle fullscreenToggle;
+    public Toggle vsyncToggle;
+    public Slider volumeSlider;
 
     Resolution[] resolutions;
 
@@ -36,33 +39,65 @@ public class OptionsMenu : MonoBehaviour
                 currentResolutionIndex = i;
             }
         }
+
         resolutionDropdown.AddOptions(options);
-        resolutionDropdown.value = currentResolutionIndex;
+        resolutionDropdown.value = PlayerPrefs.GetInt("resolutionIndex", currentResolutionIndex);
         resolutionDropdown.RefreshShownValue();
+
+        qualityDropdown.value = PlayerPrefs.GetInt(
+            "qualityIndex",
+            QualitySettings.GetQualityLevel()
+        );
+        qualityDropdown.RefreshShownValue();
+
+        fullscreenToggle.isOn = PlayerPrefs.GetInt("fullscreen", 1) == 1;
+        vsyncToggle.isOn = PlayerPrefs.GetInt("vsync", 1) == 1;
+        volumeSlider.value = PlayerPrefs.GetFloat("volume", 0.75f);
+
+        ApplySettings();
     }
 
     public void SetResolution(int resolutionIndex)
     {
         Resolution resolution = resolutions[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+        PlayerPrefs.SetInt("resolutionIndex", resolutionIndex);
     }
 
     public void SetVolume(float volume)
     {
-        audioMixer.SetFloat("volume", volume);
+        audioMixer.SetFloat("volume", Mathf.Log10(volume) * 20);
+        PlayerPrefs.SetFloat("volume", volume);
     }
 
-    public void SetQuality(int quality)
+    public void SetQuality(int qualityIndex)
     {
-        QualitySettings.SetQualityLevel(quality);
+        QualitySettings.SetQualityLevel(qualityIndex);
+        PlayerPrefs.SetInt("qualityIndex", qualityIndex);
     }
 
-    public void SetFullScreen(bool isfullScreen)
+    public void SetFullscreen(bool isFullscreen)
     {
-        Screen.fullScreen = isfullScreen;
+        Screen.fullScreen = isFullscreen;
+        PlayerPrefs.SetInt("fullscreen", isFullscreen ? 1 : 0);
     }
 
-    public void BackButton(string sceneName)
+    public void SetVSync(bool isVSync)
+    {
+        QualitySettings.vSyncCount = isVSync ? 1 : 0;
+        PlayerPrefs.SetInt("vsync", isVSync ? 1 : 0);
+    }
+
+    public void ApplySettings()
+    {
+        SetResolution(PlayerPrefs.GetInt("resolutionIndex", 0));
+        SetQuality(PlayerPrefs.GetInt("qualityIndex", QualitySettings.GetQualityLevel()));
+        SetFullscreen(PlayerPrefs.GetInt("fullscreen", 1) == 1);
+        SetVSync(PlayerPrefs.GetInt("vsync", 1) == 1);
+        SetVolume(PlayerPrefs.GetFloat("volume", 0.75f));
+    }
+
+    public void Back(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
     }

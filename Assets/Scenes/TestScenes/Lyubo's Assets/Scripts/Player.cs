@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
 
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
-                if (hit.transform.CompareTag("Buttons"))
+                if (hit.transform.CompareTag("Interactables"))
                 {
                     Button button = hit.transform.GetComponent<Button>();
                     button.Activate();

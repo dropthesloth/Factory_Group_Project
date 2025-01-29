@@ -1521,6 +1521,7 @@ GameObject:
   - component: {fileID: 2046577632343202831}
   - component: {fileID: 3555435332243102391}
   - component: {fileID: 5460794647889231198}
+  - component: {fileID: 8287768503747550227}
   m_Layer: 0
   m_Name: Curved conveyor textured
   m_TagString: Untagged
@@ -1597,6 +1598,28 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &8287768503747550227
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2926936020579085015}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 1735767813671732887, guid: cbd5daa10a0252b4c827333e0bede5a1, type: 3}
 --- !u!1 &2941321065295509569
 GameObject:
   m_ObjectHideFlags: 0

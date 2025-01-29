@@ -30,9 +30,9 @@ public class ClickObject : MonoBehaviour
     bool GetClickedObject(out RaycastHit hit)
     {
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray.origin, ray.direction * 10, out hit))
+        if (Physics.Raycast(ray, out hit, GlobalSettings.maxClickDistance))
         {
-            Debug.Log(ray.direction * 10);
+            Debug.Log(ray.direction * 4);
             if (!isPointerOverUIObject())
             {
                 return true;

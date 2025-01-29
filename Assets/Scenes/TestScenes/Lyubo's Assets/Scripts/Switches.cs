@@ -12,7 +12,14 @@ public class Switches : MonoBehaviour
 
     void OnMouseDown()
     {
-        switchPattern.OnSwitchClicked(switchIndex);
-        Debug.Log("0");
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit, GlobalSettings.maxClickDistance))
+        {
+            if (hit.transform == transform)
+            {
+                switchPattern.OnSwitchClicked(switchIndex);
+                Debug.Log("0");
+            }
+        }
     }
 }

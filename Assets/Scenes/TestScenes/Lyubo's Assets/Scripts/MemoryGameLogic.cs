@@ -31,7 +31,10 @@ public class MemoryGameLogic : MonoBehaviour
 
     [SerializeField]
     private UnityEvent OnGameOver;
-    [SerializeField]TextMeshProUGUI levelText;
+
+    [SerializeField]
+    TextMeshProUGUI levelText;
+
     // Use this for initialization
     void Start()
     {
