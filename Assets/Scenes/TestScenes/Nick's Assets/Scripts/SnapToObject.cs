@@ -13,20 +13,23 @@ public class SnapToObject : MonoBehaviour
     public bool canPlace;
     public bool isCurved;
     [SerializeField] CheckObjectsCorrectPlace checkObjectsRef;
-
+    public bool lookingAtPlayer;
     private void Awake()
     {
         canPlace = false;
+        lookingAtPlayer = false;
     }
 
     private void OnTriggerStay(Collider other)
     {
 
-        if (/*Input.GetKeyDown(KeyCode.F) &&*/ other.CompareTag("placingPoint") && player.pickedupObject == this.gameObject)
+        if (/*Input.GetKeyDown(KeyCode.F) &&*/ other.CompareTag("placingPoint"))
         {
             Debug.Log("Do you work?");
-            if(player.pickedupObject == this.gameObject || isObjectAttached)
+            if (player.pickedupObject == this.gameObject || isObjectAttached)
                 canPlace = true;
+            else
+                canPlace = false;
             if (Input.GetKeyDown(KeyCode.F))
             {
                 var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -43,18 +46,19 @@ public class SnapToObject : MonoBehaviour
                             this.transform.position = new Vector3(Camera.main.transform.localPosition.x, Camera.main.transform.localPosition.y - 1, Camera.main.transform.localPosition.z + 2);
                             player.pickedupObject = this.gameObject;
                             player.pickedupObject.transform.localScale *= 0.125f;
-                            player.pickedupObject.transform.eulerAngles = Vector3.right;
+                            player.pickedupObject.transform.localEulerAngles = new Vector3(-45, 0, 90);
                             player.pickedupObject.transform.SetParent(Camera.main.transform);
                             player.holdingObject();
+                            player.releaseObjectText.gameObject.SetActive(true);
                             isObjectAttached = false;
                             checkObjectsRef.removeObjectFromArray(this.gameObject);
                         }
                     }
                 }
-                else
+                else if (player.pickedupObject == this.gameObject)
                 {
                     player.isObjectPickedUp = false;
-                    player.releaseObject.gameObject.SetActive(false);
+                    player.releaseObjectText.gameObject.SetActive(false);
                     this.GetComponent<Rigidbody>().isKinematic = true;
                     player.pickedupObject.transform.SetParent(null);
                     player.pickedupObject = null;
@@ -64,7 +68,7 @@ public class SnapToObject : MonoBehaviour
                 }
             }
         }
-        /*else
+        /*else if (player.pickedupObject != this.gameObject)
             canPlace = false;*/
     }
 
