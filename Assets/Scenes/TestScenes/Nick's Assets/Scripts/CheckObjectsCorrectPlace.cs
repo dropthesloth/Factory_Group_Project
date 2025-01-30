@@ -3,33 +3,40 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CheckObjectsCorrectPlace : MonoBehaviour
 {
     public GameObject[] PlacingPlaces;
     public GameObject[] correctOrderObjects;
     public SnapToObject[] snapToObject;
-    private SnapToObject currentObject;
+    [SerializeField] private SnapToObject currentObject;
     public GameObject[] allPlacedObjects;
-    private float positionTolerance = 0.2f; 
+    private float positionTolerance = 0.2f;
+    public UnityEvent finishEvent;
 
     private void Start()
     {
-        allPlacedObjects = new GameObject[PlacingPlaces.Length];
+        var len = PlacingPlaces.Length;
+        allPlacedObjects = new GameObject[len];
+        //allPlacedObjects[0] = PlacingPlaces[0];
+        //Debug.Log("Does this one work though?" + allPlacedObjects[0]);
     }
+
     void Update()
     {
-        removeObjectFromArray();
-        if (isObjectAttached() == true)
+        /*if (isObjectAttached() == true)
         {
             addObjectToArray();
-        }
-        if (isArrayTheSame() == true) 
+        }*/
+        
+        if (isArrayTheSame() == true)
         {
             Debug.Log("Both arrays are the same!");
+            finishEvent.Invoke();
             //place the reward for getting it correct
         }
-        
+
     }
 
     public bool isArrayTheSame()
@@ -44,49 +51,71 @@ public class CheckObjectsCorrectPlace : MonoBehaviour
         return true;
     }
 
-    public void addObjectToArray()
+    public void addObjectToArray(SnapToObject currentObject)
     {
+        //bool doNotRemoveObjects = false;
+        Debug.Log("AddObject");
         for (var i = 0; i < PlacingPlaces.Length; i++)
-        {
-            if (Vector3.Distance(PlacingPlaces[i].transform.position, currentObject.transform.position) <= positionTolerance) 
+        { 
+            if (Vector3.Distance(PlacingPlaces[i].transform.position, currentObject.transform.position) <= positionTolerance)
             {
-                for (var j = 0; j < allPlacedObjects.Length; j++)
+                /*for (var j = 0; j < allPlacedObjects.Length; j++)
                 {
 
-                    if (allPlacedObjects[j] == currentObject)
+                    /*if (allPlacedObjects[j] == currentObject)
                     {
                         Debug.Log("Removing duplicate!");
                         allPlacedObjects[j] = null;
-                        break;  
+                        break;
                     }
 
-                }
+                }*/
                 Debug.Log("Object added to the list!");
+                Debug.Log(currentObject.gameObject);
+                Debug.Log(i);
+                Debug.Log($"Does this one work though? {allPlacedObjects} {allPlacedObjects.Length}");
                 allPlacedObjects[i] = currentObject.gameObject;
+                
+                //doNotRemoveObjects = true;
+            }
+            /*else
+            {
+                if (i == PlacingPlaces.Length - 1 && !doNotRemoveObjects)
+                    removeObjectFromArray();
+            }*/
+        }
+    }
+
+    public void removeObjectFromArray(GameObject objectToRemove)
+    {
+        for (var j = 0; j < allPlacedObjects.Length; j++)
+        {
+            if (allPlacedObjects[j] == objectToRemove)
+            {
+                Debug.Log("Object removed!");
+                allPlacedObjects[j] = null;
             }
         }
-    }
-
-    public void removeObjectFromArray()
-    {
-        for (var i = 0; i < PlacingPlaces.Length; i++)
+        /*for (var i = 0; i < correctOrderObjects.Length; i++)
         {
-                for (var j = 0; j < allPlacedObjects.Length; j++)
+            for (var j = 0; j < allPlacedObjects.Length; j++)
+            {
+                if (allPlacedObjects[j] != correctOrderObjects[i])
                 {
-                    if (allPlacedObjects[j] != PlacingPlaces[i])
-                    {
-                        Debug.Log("Object removed!");
-                        allPlacedObjects[j] = null;
-                    }
+                    Debug.Log("Object removed!");
+                    allPlacedObjects[j] = null;
                 }
-        }
+            }
+        }*/
     }
 
-    private bool isObjectAttached()
+    /*private bool isObjectAttached()
     {
+        Debug.Log("isObjectAttached?");
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray.origin, ray.direction * 10, out RaycastHit hit, LayerMask.GetMask("pickUpObject")))
+        if (Physics.Raycast(ray.origin, ray.direction * 10, out RaycastHit hit, LayerMask.GetMask("pickUpObjects")))
         {
+            Debug.Log("Should object deattach?");
             for (int i = 0; i < snapToObject.Length; i++)
             {
                 if (hit.transform.position == snapToObject[i].transform.position)
@@ -97,5 +126,5 @@ public class CheckObjectsCorrectPlace : MonoBehaviour
             }
         }
         return false;
-    }
+    }*/
 }
