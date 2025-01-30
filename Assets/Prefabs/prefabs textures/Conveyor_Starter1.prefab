@@ -327,6 +327,7 @@ GameObject:
   - component: {fileID: 9043836229441519202}
   - component: {fileID: 8608588797922392204}
   - component: {fileID: 3005539383044530463}
+  - component: {fileID: -22583870514799308}
   m_Layer: 0
   m_Name: Conveyor_Starter1
   m_TagString: Untagged
@@ -400,6 +401,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &-22583870514799308
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6032675843628746924}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 101.562195, y: 204.75853, z: 132.87027}
+  m_Center: {x: -0.0000076293945, y: 0, z: -0.000015258789}
 --- !u!1 &6100313966475266234
 GameObject:
   m_ObjectHideFlags: 0
