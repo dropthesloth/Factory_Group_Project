@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class CableDecider : MonoBehaviour
 {
-    [SerializeField] Vector3 straightRotation;
-    [SerializeField] Vector3 curvedRotation;
+    [SerializeField] Transform straightPlacement;
+    [SerializeField] Transform curvedPlacement;
+    [SerializeField] CheckObjectsCorrectPlace checkObjectsRef;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,9 +21,15 @@ public class CableDecider : MonoBehaviour
     public void CheckIfCurved(Transform attachedObject, bool isCurved)
     {
         if (isCurved)
-            attachedObject.eulerAngles = curvedRotation;
+        {
+            attachedObject.eulerAngles = curvedPlacement.eulerAngles;
+            attachedObject.localScale = curvedPlacement.localScale;
+        }
         else
-            attachedObject.eulerAngles = straightRotation;
-            
+        { 
+            attachedObject.eulerAngles = straightPlacement.eulerAngles;
+            attachedObject.localScale = straightPlacement.localScale;
+        }
+        checkObjectsRef.addObjectToArray(attachedObject.gameObject.GetComponent<SnapToObject>());     
     }
 }
