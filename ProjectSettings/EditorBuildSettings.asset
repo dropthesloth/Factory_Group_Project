@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/TestScenes/LyuboMainMenu.unity
     guid: 051ef8b6ac99d4a4eb2494c80f9ba2a5
   - enabled: 1
-    path: Assets/Scenes/TestScenes/LyuboOptionsMenu.unity
+    path: Assets/Scenes/TestScenes/JeroenOptionsMenu.unity
     guid: c82fafa541d37454b973bde706defbb9
   - enabled: 1
     path: Assets/Scenes/MainScene.unity
