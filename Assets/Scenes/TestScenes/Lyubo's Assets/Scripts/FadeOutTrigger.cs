@@ -7,7 +7,9 @@ public class FadeOut : MonoBehaviour
     public CanvasGroup canvasGroup;
     public float fadeDuration = 1f;
     public string sceneToLoad;
+  
 
+    
     public IEnumerator FadeToBlack()
     {
         float elapsedTime = 0f;
