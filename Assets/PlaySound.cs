@@ -5,21 +5,11 @@ using UnityEngine;
 public class PlaySound : MonoBehaviour
 
 {
-    public AudioClip Sound;
+    public AudioSource Sound;
     // Start is called before the first frame update
     public void SoundPlay()
     {
-        
+        Sound.Play();
     }
-    
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+   
 }

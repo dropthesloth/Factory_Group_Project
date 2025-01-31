@@ -63,11 +63,7 @@ public class PlayerMovement : MonoBehaviour
             runSound.Stop();
         }
 
-        if (grounded && Input.GetButtonDown("Jump"))
-        {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            jumpSound.Play();
-        }
+        
     }
 
     void RotatePlayer()

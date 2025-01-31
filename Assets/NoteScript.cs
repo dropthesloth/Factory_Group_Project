@@ -6,6 +6,8 @@ public class NoteScript : MonoBehaviour
 {
     public GameObject note;
     public GameObject closingText;
+    public AudioSource Opening;
+    public AudioSource Closing;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +22,7 @@ public class NoteScript : MonoBehaviour
         {
             note.SetActive(false);
             closingText.SetActive(false);
+            Closing.Play();
         }
     }
     void OnMouseDown()
@@ -28,5 +31,6 @@ public class NoteScript : MonoBehaviour
         //if (!note.activeSelf)
         note.SetActive(true);
         closingText.SetActive(true);
+        Opening.Play();
     }
 }
