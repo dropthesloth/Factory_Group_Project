@@ -10,7 +10,7 @@ public class DoorUnlocker : MonoBehaviour
     public GameObject door;
     bool doorUnlocked;
     bool doorOpened;
-    public TextMeshProUGUI doorText;
+    
     // Start is called before the first frame update
     void Start()
     {
