@@ -13,7 +13,7 @@ public class ObjectVanisher : MonoBehaviour
     void Start()
     {
         if (obstacleText != null)
-            obstacleText.text = "Obstacle active";
+            obstacleText.text = "CLOSED";
         obstacleVanished = false;
     }
 
@@ -40,7 +40,10 @@ public class ObjectVanisher : MonoBehaviour
             }
 
             if (obstacleText != null)
-                obstacleText.text = "Obstacle inactive";
+            {
+                obstacleText.text = "OPEN";
+                obstacleText.color = Color.green;
+            }
         }
     }
     public void RemoveObstacle()

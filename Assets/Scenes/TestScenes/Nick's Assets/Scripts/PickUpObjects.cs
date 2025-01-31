@@ -1,14 +1,13 @@
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.UIElements;
 
 public class PickUpObjects : MonoBehaviour
 {
-    public TextMeshProUGUI pickUpObjectText;
-    public TextMeshProUGUI releaseObjectText;
-    public TextMeshProUGUI attachToObjectText;
+    public GameObject pickUpObjectText;
+    public GameObject releaseObjectText;
+    public GameObject attachToObjectText;
     public PlayerMovement player;
     public float pickUpRange;
     public string targetTag = "pickUpObject";
@@ -51,11 +50,10 @@ public class PickUpObjects : MonoBehaviour
                 attachToObjectText.gameObject.SetActive(true);
                 if (objectHit.transform.GetComponent<SnapToObject>().isObjectAttached)
                 {
-                    attachToObjectText.text = "[F]Deattach object";
+
                 }
                 else
                 {
-                    attachToObjectText.text = "[F]Place object";
                 }
             }
             if (Input.GetKeyDown(KeyCode.E))
