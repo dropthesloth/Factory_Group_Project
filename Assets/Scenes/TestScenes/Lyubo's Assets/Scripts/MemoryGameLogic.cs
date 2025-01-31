@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -64,32 +65,47 @@ public class MemoryGameLogic : MonoBehaviour
             Renderer renderer = obj.GetComponent<Renderer>();
             if (renderer != null)
             {
-                renderer.material.color = Color.green; // Change color to green on click
+                StartCoroutine(HandleButtonPressWithFlash(renderer, obj));
             }
             else
             {
                 Debug.LogError("Renderer component not found on the button object.");
                 return;
             }
+        }
+    }
 
-            string buttonName = simonPlayer.GetButtonPress(playerButtonPress);
-            Debug.Log($"Expected button: {buttonName}, Pressed button: {obj.name}");
+    private IEnumerator HandleButtonPressWithFlash(Renderer renderer, GameObject obj)
+    {
+        // Flash the button
+        yield return StartCoroutine(FlashButton(renderer));
 
-            if (buttonName != null && buttonName.Equals(obj.name))
+        // Handle the game logic after the button flash
+        string buttonName = simonPlayer.GetButtonPress(playerButtonPress);
+        Debug.Log($"Expected button: {buttonName}, Pressed button: {obj.name}");
+
+        if (buttonName != null && buttonName.Equals(obj.name))
+        {
+            Debug.Log("You hit the right button!");
+            playerButtonPress++;
+
+            if (playerButtonPress == numberOfPresses)
             {
-                Debug.Log("You hit the right button!");
-                playerButtonPress++;
-
-                if (playerButtonPress == numberOfPresses)
-                {
-                    IncreaseLevel();
-                }
-            }
-            else
-            {
-                GameOver();
+                IncreaseLevel();
             }
         }
+        else
+        {
+            GameOver();
+        }
+    }
+
+    private IEnumerator FlashButton(Renderer renderer)
+    {
+        Color originalColor = renderer.material.color;
+        renderer.material.color = Color.green; // Change color to green on click
+        yield return new WaitForSeconds(0.5f); // Wait for 0.5 seconds
+        renderer.material.color = originalColor; // Revert to original color
     }
 
     void IncreaseLevel()
