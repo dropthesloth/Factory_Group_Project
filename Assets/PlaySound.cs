@@ -9,7 +9,7 @@ public class PlaySound : MonoBehaviour
     // Start is called before the first frame update
     public void SoundPlay()
     {
-        Sound.
+        
     }
     
     void Start()
