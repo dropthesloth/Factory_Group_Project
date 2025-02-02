@@ -68,12 +68,5 @@ public class SnapToObject : MonoBehaviour
                 }
             }
         }
-        /*else if (player.pickedupObject != this.gameObject)
-            canPlace = false;*/
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        canPlace = false;
     }
 }

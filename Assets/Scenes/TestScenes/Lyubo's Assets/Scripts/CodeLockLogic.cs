@@ -17,7 +17,7 @@ public class CodeLockLogic : MonoBehaviour
     private TMP_Text codeDisplay; // Reference to the TextMeshPro component
 
     private string enteredCode = "";
-
+    
     public void AddDigit(string number)
     {
         enteredCode += number;
@@ -27,7 +27,7 @@ public class CodeLockLogic : MonoBehaviour
 
     private void UpdateCodeDisplay()
     {
-        if (codeDisplay != null)
+        if (codeDisplay != null && enteredCode != "OPEN")
         {
             codeDisplay.text = enteredCode;
         }
@@ -41,6 +41,7 @@ public class CodeLockLogic : MonoBehaviour
             {
                 onRightAnswer.Invoke(enteredCode);
                 Debug.Log("Correct code entered!");
+                codeDisplay.text = "OPEN";
                 // Do not clear the entered code if it is correct
             }
             else

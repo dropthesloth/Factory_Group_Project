@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/TestScenes/LyuboMainMenu.unity
-    guid: 051ef8b6ac99d4a4eb2494c80f9ba2a5
+    path: Assets/Scenes/TestScenes/JeroenMainMenu.unity
+    guid: 487d1f8a082b0f845b8b6545b9d625e7
   - enabled: 1
     path: Assets/Scenes/TestScenes/JeroenOptionsMenu.unity
     guid: c82fafa541d37454b973bde706defbb9

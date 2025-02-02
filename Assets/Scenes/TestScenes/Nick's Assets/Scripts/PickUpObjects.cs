@@ -48,13 +48,6 @@ public class PickUpObjects : MonoBehaviour
             if (!attachToObjectText.gameObject.activeSelf && objectHit.transform.GetComponent<SnapToObject>().canPlace)
             {
                 attachToObjectText.gameObject.SetActive(true);
-                if (objectHit.transform.GetComponent<SnapToObject>().isObjectAttached)
-                {
-
-                }
-                else
-                {
-                }
             }
             if (Input.GetKeyDown(KeyCode.E))
             {
